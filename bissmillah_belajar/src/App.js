@@ -8,39 +8,79 @@ class App extends React.Component {
     this.state = {
       username: '',
       age: null,
+      send: null,
+      errormessage: ''
     };
-  }
-  mySubmitHandler = (event) => {
-    event.preventDefault();
-    let age = this.state.age;
-    if (!Number(age)) {
-      alert("Your age must be a number");
-    }
   }
   myChangeHandler = (event) => {
     let nam = event.target.name;
     let val = event.target.value;
+    let err = '';
+    if (nam === "age") {
+      if (val !="" && !Number(val)) {
+        err = <strong>Your age must be a number</strong>;
+      }
+    }
+    this.setState({errormessage: err});
     this.setState({[nam]: val});
   }
+   mySubmitHandler = (event) => {
+    event.preventDefault();
+    let send = this.state.send;
+    if (!(send)) {
+      alert("data is sent to the server");
+    }
+  }
+
+  
   render() {
     return (
+       
+     
       <form onSubmit={this.mySubmitHandler}>
-      <h1>Hello {this.state.username} {this.state.age}</h1>
-      <p>Enter your name:</p>
+      <h1 style={{textAlign:'center'}}>FORM  </h1>
+      <div >
+      <label >Name:  
       <input
         type='text'
         name='username'
         onChange={this.myChangeHandler}
-      />
-      <p>Enter your age:</p>
+        style={{width:'10%', display:'inline-block',marginLeft:'57px'}}>
+      </input> 
+      </label>
+      </div>
+     
+      <div style={{marginTop:'20px'}}>
+      <label >Age Birthday:
       <input
         type='text'
         name='age'
         onChange={this.myChangeHandler}
+        style={{width:'10%', display:'inline-block',marginLeft:'10px'}}>
+      </input> 
+      </label>
+      </div>
+      {this.state.errormessage}
+
+      <div style={{marginTop:'20px'}}>
+        <label> Gender :
+      <select value={this.state.mycar} style={{marginLeft:'45px',width:'70px'}}>
+        <option value="Ford">Male</option>
+        <option value="Volvo">Female</option>
+   
+      </select>
+      </label>
+      </div>
+
+      <br/>
+      <br/>
+      <div>
+      <input 
+      type='submit' 
+      name='send'
+      onChange={this.myChangeHandler}
       />
-      <br/>
-      <br/>
-      <input type='submit' />
+      </div>
       </form>
     );
   }
